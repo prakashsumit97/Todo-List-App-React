@@ -1,7 +1,13 @@
 import { NewTodoForm } from "./NewTodoForm";
 import "./styles.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TodoList } from "./TodoList";
+import { Navbar } from "./Navbar";
+import AuthContext from "./AuthContext";
+import { InputFocus } from "./UserRef";
+import WrappedReduxImplementataion from "./Redux";
+
+
 
 export default function App() {
   const [todos, setTodos] = useState(() => {
@@ -10,6 +16,8 @@ export default function App() {
 
     return JSON.parse(localValue);
   })
+
+  const [user, setUser] = useState({ name: "Sumit Prakash" });
 
 
   useEffect(() => {
@@ -43,5 +51,10 @@ export default function App() {
   return <><NewTodoForm onSubmit={addTodo} />
     <h1 className="header">Todo List</h1>
     <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+    <AuthContext.Provider value={{ user, setUser }}>
+      <Navbar />
+    </AuthContext.Provider>
+    <InputFocus />
+    <WrappedReduxImplementataion />
   </>
 }
